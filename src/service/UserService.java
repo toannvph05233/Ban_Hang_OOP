@@ -14,7 +14,7 @@ public class UserService {
     private static Map<String, User> users = new HashMap<>();
 
     public UserService() {
-        users.put("admin", new User("admin", "admin", "accept", "admin"));
+        users.put("admin", new User("admin", BCrypt.hashpw("admin", BCrypt.gensalt()), "accept", "admin"));
     }
 
     public void register(Scanner scanner) {
