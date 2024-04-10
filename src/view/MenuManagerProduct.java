@@ -29,7 +29,7 @@ public class MenuManagerProduct {
                     productService.addProduct(scanner, categoryService);
                     break;
                 case 3:
-                    productService.editProduct(scanner);
+                    productService.editProduct(scanner,categoryService);
                     break;
                 case 4:
                     productService.hideProductById(scanner);

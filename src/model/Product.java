@@ -1,48 +1,123 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Product {
-    private String id;
-    private String name;
-    private double price;
-    private Category category;
+    private int productId;
+    private String productName;
+    private String categoryId;
+    private String description;
+    private double unitPrice;
+    private int stock;
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
+    private boolean status;
 
-
-    public Product(String id, String name, double price, Category category) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.category = category;
+    public Product() {
     }
 
-    public String getId() {
-        return id;
+    public Product(int productId, String productName, String categoryId, String description, double unitPrice, int stock) {
+        this.productId = productId;
+        this.productName = productName;
+        this.categoryId = categoryId;
+        this.description = description;
+        this.unitPrice = unitPrice;
+        this.stock = stock;
+        this.createdAt = LocalDate.now();
+        this.updatedAt = LocalDate.now();;
+        this.status = true;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public int getProductId() {
+        return productId;
     }
 
-    public String getName() {
-        return name;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public double getPrice() {
-        return price;
+    public String getProductName() {
+        return productName;
     }
 
-    public Category getCategory() {
-        return category;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public String getDescription() {
+        return description;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDate getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDate updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", categoryId='" + categoryId + '\'' +
+                ", description='" + description + '\'' +
+                ", unitPrice=" + unitPrice +
+                ", stock=" + stock +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", status=" + status +
+                '}';
+    }
+
+    public boolean isHotProduct() {
+        double hotPriceThreshold = 1000.0;
+        return this.unitPrice > hotPriceThreshold;
+    }
+
 }

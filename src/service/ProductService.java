@@ -1,57 +1,96 @@
 package service;
 
 import model.Product;
-import model.Category;
+import model.Catalog;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class ProductService {
-    private static Map<String, Product> products = new HashMap<>();
-    private static int productIdCounter = 1;
+    private static Map<Integer, Product> products = new HashMap<>();
 
     public void displayProducts() {
         System.out.println("Danh sách sản phẩm:");
         for (Product product : products.values()) {
-            System.out.println("ID: " + product.getId() + ", Tên: " + product.getName() + ", Giá: " + product.getPrice() + ", Danh mục: " + product.getCategory().getName());
+            System.out.println(product);
         }
     }
 
-    public void addProduct(Scanner scanner,  CategoryService categoryService) {
+    public void addProduct(Scanner scanner, CategoryService categoryService) {
         System.out.print("Nhập tên sản phẩm: ");
-        String name = scanner.nextLine();
+        String productName = scanner.nextLine();
         System.out.print("Nhập giá sản phẩm: ");
-        double price = scanner.nextDouble();
+        double unitPrice = scanner.nextDouble();
         scanner.nextLine(); // Consume newline character
-        System.out.print("Chọn ID danh mục của sản phẩm: ");
+
+        // Hiển thị danh sách các danh mục
+        System.out.println("Danh sách danh mục:");
         categoryService.displayCategories();
-        String idCategory = scanner.nextLine();
-        Category category = categoryService.getCategories().get(idCategory);
+
+        System.out.print("Chọn số lượng của sản phẩm: ");
+        int stock = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Nhập description sản phẩm: ");
+        String description = scanner.nextLine();
+
+        // Nhập ID danh mục
+        System.out.print("Chọn ID danh mục của sản phẩm: ");
+        String categoryId = scanner.nextLine();
+
+        // Lấy danh mục từ ID
+        Catalog category = categoryService.getCategories().get(categoryId);
         if (category != null) {
-            String productId = String.valueOf(productIdCounter++);
-            Product product = new Product(productId, name, price, category);
+            int productId = getMaxId() + 1;
+            // Tạo đối tượng Product với thông tin đã nhập
+            Product product = new Product(productId, productName, categoryId, description, unitPrice, stock);
+
+            // Thêm sản phẩm vào danh sách sản phẩm
             products.put(productId, product);
+
             System.out.println("Sản phẩm đã được thêm vào.");
         } else {
             System.out.println("Không tìm thấy danh mục.");
         }
     }
 
-    public void editProduct(Scanner scanner) {
+    public void editProduct(Scanner scanner, CategoryService categoryService) {
         System.out.print("Nhập ID của sản phẩm cần chỉnh sửa: ");
         String productId = scanner.nextLine();
+
         if (products.containsKey(productId)) {
             Product product = products.get(productId);
+
             System.out.print("Nhập tên mới của sản phẩm: ");
             String newName = scanner.nextLine();
+            product.setProductName(newName);
+
+            while (true) {
+                System.out.print("Nhập ID danh mục mới của sản phẩm: ");
+                System.out.println("Danh sách danh mục:");
+                categoryService.displayCategories();
+                String newCategoryId = scanner.nextLine();
+                Catalog category = categoryService.getCategories().get(newCategoryId);
+                if (category != null) {
+                    product.setCategoryId(newCategoryId);
+                    break;
+                } else {
+                    System.out.println("Không tìm thấy danh mục.");
+                }
+            }
+
+            System.out.print("Nhập mô tả mới của sản phẩm: ");
+            String newDescription = scanner.nextLine();
+            product.setDescription(newDescription);
+
             System.out.print("Nhập giá mới của sản phẩm: ");
-            double newPrice = scanner.nextDouble();
+            double newUnitPrice = scanner.nextDouble();
             scanner.nextLine(); // Consume newline character
-            product.setName(newName);
-            product.setPrice(newPrice);
+            product.setUnitPrice(newUnitPrice);
+
+            System.out.print("Nhập số lượng mới của sản phẩm: ");
+            int newStock = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+            product.setStock(newStock);
+
             System.out.println("Thông tin sản phẩm đã được cập nhật.");
         } else {
             System.out.println("Không tìm thấy sản phẩm có ID là " + productId);
@@ -87,7 +126,7 @@ public class ProductService {
         String name = scanner.nextLine();
         List<Product> foundProducts = new ArrayList<>();
         for (Product product : products.values()) {
-            if (product.getName().contains(name)) {
+            if (product.getProductName().toLowerCase().contains(name.toLowerCase())) {
                 foundProducts.add(product);
             }
         }
@@ -96,18 +135,83 @@ public class ProductService {
         } else {
             System.out.println("Kết quả tìm kiếm:");
             for (Product product : foundProducts) {
-                System.out.println("ID: " + product.getId() + ", Tên: " + product.getName() + ", Giá: " + product.getPrice() + ", Danh mục: " + product.getCategory().getName());
+                System.out.println(product);
             }
         }
     }
 
-    private Category findCategoryByName(List<Category> categories, String name) {
-        for (Category category : categories) {
-            if (category.getName().equalsIgnoreCase(name)) {
-                return category;
+    private Catalog findCategoryByName(List<Catalog> categories, String name) {
+        for (Catalog catalog : categories) {
+            if (catalog.getCatalogName().equalsIgnoreCase(name)) {
+                return catalog;
             }
         }
         return null;
     }
+
+    public int getMaxId() {
+        int idMax = 0;
+        for (Product p : products.values()) {
+            if (idMax < p.getProductId()) {
+                idMax = p.getProductId();
+            }
+        }
+        return idMax;
+    }
+
+    public void displayProductsByCategory(CategoryService categoryService) {
+        System.out.println("Danh sách sản phẩm theo danh mục:");
+        for (Catalog category : categoryService.getCategories().values()) {
+            System.out.println("Danh mục: " + category.getCatalogName());
+            for (Product product : products.values()) {
+                if (product.getCategoryId().equals(category.getCatalogId())) {
+                    System.out.println(product);
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public void displayProductsSortedByPrice(boolean ascending) {
+        List<Product> sortedProducts = new ArrayList<>(products.values());
+        if (ascending) {
+            sortedProducts.sort(Comparator.comparingDouble(Product::getUnitPrice));
+        } else {
+            sortedProducts.sort((p1, p2) -> Double.compare(p2.getUnitPrice(), p1.getUnitPrice()));
+        }
+        System.out.println("Danh sách sản phẩm được sắp xếp theo giá:");
+        for (Product product : sortedProducts) {
+            System.out.println(product);
+        }
+    }
+
+    public void addToCart(Scanner scanner, CartService cartService) {
+        System.out.print("Nhập ID của sản phẩm cần thêm vào giỏ hàng: ");
+        String productId = scanner.nextLine();
+        if (products.containsKey(productId)) {
+            Product product = products.get(productId);
+            System.out.print("Nhập số lượng: ");
+            int quantity = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+            cartService.addToCart(product, quantity);
+            System.out.println("Đã thêm sản phẩm vào giỏ hàng.");
+        } else {
+            System.out.println("Không tìm thấy sản phẩm có ID là " + productId);
+        }
+    }
+
+    public void displayHotProducts() {
+        System.out.println("Danh sách sản phẩm nổi bật:");
+        for (Product product : products.values()) {
+            if (product.isHotProduct()) {
+                System.out.println(product);
+            }
+        }
+    }
+
+
+
+
+
 }
 

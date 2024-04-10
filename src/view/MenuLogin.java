@@ -1,6 +1,8 @@
 package view;
 
 import model.User;
+import model.enumModel.Role;
+import service.CartService;
 import service.CategoryService;
 import service.ProductService;
 import service.UserService;
@@ -8,7 +10,7 @@ import service.UserService;
 import java.util.Scanner;
 
 public class MenuLogin {
-    public static void userManagementMenu(Scanner scanner, UserService userService, CategoryService categoryService, ProductService productService) {
+    public static void userManagementMenu(Scanner scanner, UserService userService, CategoryService categoryService, ProductService productService, CartService cartService) {
         while (true) {
             System.out.println("1. Đăng ký");
             System.out.println("2. Đăng nhập");
@@ -25,10 +27,10 @@ public class MenuLogin {
                 case 2:
                     User user = userService.login(scanner);
                     if (user != null) {
-                        if (user.getRole().equals("admin")) {
+                        if (user.getRole() == Role.ROLE_ADMIN) {
                             MenuAdmin.menu(scanner,userService,categoryService,productService);
                         } else {
-                            System.out.println("Chào user");
+                            MenuUser.displayMainMenu(productService,categoryService,cartService);
                         }
                     }
                     break;

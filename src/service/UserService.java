@@ -2,6 +2,7 @@ package service;
 
 import model.User;
 
+import model.enumModel.Role;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.ArrayList;
@@ -14,17 +15,43 @@ public class UserService {
     private static Map<String, User> users = new HashMap<>();
 
     public UserService() {
-        users.put("admin", new User("admin", BCrypt.hashpw("admin", BCrypt.gensalt()), "accept", "admin"));
+        User user = new User(1,"admin", "1", "1",BCrypt.hashpw("admin", BCrypt.gensalt()),"1","1","1");
+        user.setRole(Role.ROLE_ADMIN);
+        users.put("admin", user);
     }
 
     public void register(Scanner scanner) {
-        System.out.print("Nhập tên người dùng: ");
-        String username = scanner.nextLine();
+        String username;
+        while (true) {
+            System.out.print("Nhập tên người dùng: ");
+            username = scanner.nextLine();
+            if (users.get(username) == null) {
+                break;
+            }else {
+                System.out.println("Username đã tồn tại");
+            }
+        }
         System.out.print("Nhập mật khẩu: ");
         String password = scanner.nextLine();
+        System.out.print("Nhập tên: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Nhập họ: ");
+        String lastName = scanner.nextLine();
+        System.out.print("Nhập email: ");
+        String email = scanner.nextLine();
+        System.out.print("Nhập số điện thoại: ");
+        String phoneNumber = scanner.nextLine();
+        System.out.print("Nhập địa chỉ: ");
+        String address = scanner.nextLine();
+
         // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        users.put(username, new User(username, password, "user", "accept"));
+        List<User> users1 = (List<User>) users.values();
+        int id = users1.get(users1.size() - 1).getUserId() + 1;
+        // Tạo đối tượng User với thông tin đã nhập
+        User newUser = new User(id, username, hashedPassword, firstName, lastName, email, phoneNumber, address);
+
+        users.put(username, newUser);
         System.out.println("Đăng ký thành công.");
     }
 
@@ -46,7 +73,7 @@ public class UserService {
     public void displayUsers() {
         System.out.println("Danh sách người dùng:");
         for (User user : users.values()) {
-            System.out.println("Tên người dùng: " + user.getUsername() + ", Vai trò: " + user.getRole() + ", Trạng thái: " + user.getStatus());
+            System.out.println(user);
         }
     }
 
@@ -62,7 +89,7 @@ public class UserService {
         } else {
             System.out.println("Kết quả tìm kiếm:");
             for (User user : foundUsers) {
-                System.out.println("Tên người dùng: " + user.getUsername() + ", Vai trò: " + user.getRole() + ", Trạng thái: " + user.getStatus());
+                System.out.println(user);
             }
         }
     }
@@ -70,7 +97,7 @@ public class UserService {
     public void blockUser(String username) {
         if (users.containsKey(username)) {
             User user = users.get(username);
-            user.setStatus("blocked");
+            user.setStatus(false);
             System.out.println("Tài khoản " + username + " đã bị khóa.");
         } else {
             System.out.println("Không tìm thấy người dùng có tên là " + username + ".");
@@ -80,7 +107,7 @@ public class UserService {
     public void unblockUser(String username) {
         if (users.containsKey(username)) {
             User user = users.get(username);
-            user.setStatus("accept");
+            user.setStatus(true);
             System.out.println("Tài khoản " + username + " đã được mở khóa.");
         } else {
             System.out.println("Không tìm thấy người dùng có tên là " + username + ".");
