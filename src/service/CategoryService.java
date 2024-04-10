@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class CategoryService {
     private static Map<String, Catalog> categories = new HashMap<>();
-    private static int categoryIdCounter = 1; // Dùng để tự động tăng ID cho danh mục
 
     public void displayCategories() {
         System.out.println("Danh sách danh mục:");
@@ -24,8 +23,13 @@ public class CategoryService {
         String name = scanner.nextLine();
         System.out.print("Nhập description danh mục: ");
         String description = scanner.nextLine();
-        List<Catalog> catalogs = (List<Catalog> )categories.values();
-        String categoryId = catalogs.get(catalogs.size()-1).getCatalogId() + 1;
+        List<Catalog> catalogs = new ArrayList<>(categories.values());
+        String categoryId;
+        if (catalogs.size() != 0) {
+            categoryId = catalogs.get(catalogs.size() - 1).getCatalogId() + 1;
+        } else {
+            categoryId = "C001";
+        }
         Catalog catalog = new Catalog(categoryId, name, description);
         categories.put(categoryId, catalog);
         System.out.println("Danh mục mới đã được thêm vào.");

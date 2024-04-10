@@ -29,7 +29,7 @@ public class MenuAdmin {
                 case 3:
                     MenuManagerProduct.menu(scanner, productService, categoryService);
                     break;
-                case 5:
+                case 4:
                     return; // Quay lại menu chính
                 default:
                     System.out.println("Lựa chọn không hợp lệ.");

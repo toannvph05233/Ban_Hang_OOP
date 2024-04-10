@@ -18,21 +18,32 @@ public class ProductService {
     public void addProduct(Scanner scanner, CategoryService categoryService) {
         System.out.print("Nhập tên sản phẩm: ");
         String productName = scanner.nextLine();
-        System.out.print("Nhập giá sản phẩm: ");
-        double unitPrice = scanner.nextDouble();
-        scanner.nextLine(); // Consume newline character
+        double unitPrice;
+        while (true) {
+            try {
+                System.out.print("Nhập giá sản phẩm: ");
+                unitPrice = Double.parseDouble(scanner.nextLine());
+                break;
+            } catch (Exception e) {
+                System.err.println("nhập sai định dạng");
+            }
+        }
 
-        // Hiển thị danh sách các danh mục
-        System.out.println("Danh sách danh mục:");
-        categoryService.displayCategories();
-
-        System.out.print("Chọn số lượng của sản phẩm: ");
-        int stock = Integer.parseInt(scanner.nextLine());
+        int stock;
+        while (true) {
+            try {
+                System.out.print("Chọn số lượng của sản phẩm: ");
+                stock = Integer.parseInt(scanner.nextLine());
+                break;
+            } catch (Exception e) {
+                System.err.println("nhập sai định dạng");
+            }
+        }
 
         System.out.print("Nhập description sản phẩm: ");
         String description = scanner.nextLine();
 
-        // Nhập ID danh mục
+        categoryService.displayCategories();
         System.out.print("Chọn ID danh mục của sản phẩm: ");
         String categoryId = scanner.nextLine();
 
@@ -65,7 +76,6 @@ public class ProductService {
 
             while (true) {
                 System.out.print("Nhập ID danh mục mới của sản phẩm: ");
-                System.out.println("Danh sách danh mục:");
                 categoryService.displayCategories();
                 String newCategoryId = scanner.nextLine();
                 Catalog category = categoryService.getCategories().get(newCategoryId);
@@ -187,7 +197,7 @@ public class ProductService {
 
     public void addToCart(Scanner scanner, CartService cartService) {
         System.out.print("Nhập ID của sản phẩm cần thêm vào giỏ hàng: ");
-        String productId = scanner.nextLine();
+        int productId = Integer.parseInt(scanner.nextLine());
         if (products.containsKey(productId)) {
             Product product = products.get(productId);
             System.out.print("Nhập số lượng: ");
@@ -208,9 +218,6 @@ public class ProductService {
             }
         }
     }
-
-
-
 
 
 }

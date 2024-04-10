@@ -15,7 +15,7 @@ public class UserService {
     private static Map<String, User> users = new HashMap<>();
 
     public UserService() {
-        User user = new User(1,"admin", "1", "1",BCrypt.hashpw("admin", BCrypt.gensalt()),"1","1","1");
+        User user = new User(1, "admin", "1", "1", BCrypt.hashpw("admin", BCrypt.gensalt()), "1", "1", "1");
         user.setRole(Role.ROLE_ADMIN);
         users.put("admin", user);
     }
@@ -27,7 +27,7 @@ public class UserService {
             username = scanner.nextLine();
             if (users.get(username) == null) {
                 break;
-            }else {
+            } else {
                 System.out.println("Username đã tồn tại");
             }
         }
@@ -46,10 +46,15 @@ public class UserService {
 
         // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        List<User> users1 = (List<User>) users.values();
-        int id = users1.get(users1.size() - 1).getUserId() + 1;
+        List<User> users1 = new ArrayList<>(users.values());
+        int id;
+        if (users1.size() != 0) {
+            id = users1.get(users1.size() - 1).getUserId() + 1;
+        } else {
+            id = 1;
+        }
         // Tạo đối tượng User với thông tin đã nhập
-        User newUser = new User(id, username, hashedPassword, firstName, lastName, email, phoneNumber, address);
+        User newUser = new User(id, username, firstName, lastName, hashedPassword, email, phoneNumber, address);
 
         users.put(username, newUser);
         System.out.println("Đăng ký thành công.");
