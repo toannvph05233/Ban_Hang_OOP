@@ -1,6 +1,10 @@
-package model;
+package business.entity;
 
-public class CartItem {
+import java.io.Serializable;
+
+public class CartItem implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Long productId;
     private int quantity;
 
@@ -12,8 +16,8 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public Long getProductId() {
-        return productId;
+    public int getProductId() {
+        return Math.toIntExact(productId);
     }
 
     public void setProductId(Long productId) {

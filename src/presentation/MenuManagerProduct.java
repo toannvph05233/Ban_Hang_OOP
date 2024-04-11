@@ -1,13 +1,14 @@
-package view;
+package presentation;
 
-import service.CategoryService;
-import service.ProductService;
+import business.service.CategoryService;
+import business.service.ProductService;
 
 import java.util.Scanner;
 
 public class MenuManagerProduct {
     public static void menu(Scanner scanner, ProductService productService, CategoryService categoryService){
         while (true) {
+            System.out.println("-------------------------------------------------------------------");
             System.out.println("--- Quản lý sản phẩm ---");
             System.out.println("1. Hiển thị danh sách sản phẩm");
             System.out.println("2. Thêm mới sản phẩm");
@@ -23,7 +24,7 @@ public class MenuManagerProduct {
 
             switch (choice) {
                 case 1:
-                    productService.displayProducts();
+                    productService.displayProducts(categoryService.getCategories());
                     break;
                 case 2:
                     productService.addProduct(scanner, categoryService);

@@ -1,12 +1,13 @@
-package view;
+package presentation;
 
-import service.UserService;
+import business.service.UserService;
 
 import java.util.Scanner;
 
 public class MenuManagerAccount {
     public static void menu(Scanner scanner, UserService userService) {
         while (true) {
+            System.out.println("-------------------------------------------------------------------");
             System.out.println("--- Quản lý người dùng ---");
             System.out.println("1. Hiển thị danh sách người dùng");
             System.out.println("2. Tìm kiếm người dùng theo tên");
@@ -28,9 +29,9 @@ public class MenuManagerAccount {
                     userService.searchUserByName(name);
                     break;
                 case 3:
-                    System.out.print("Nhập tên người dùng cần block: ");
-                    String userToBlock = scanner.nextLine();
-                    userService.blockUser(userToBlock);
+                    System.out.print("Nhập id người dùng cần block: ");
+                    int id = Integer.parseInt(scanner.nextLine());
+                    userService.blockUser(id);
                     break;
                 case 4:
                     System.out.print("Nhập tên người dùng cần unblock: ");

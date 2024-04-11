@@ -1,17 +1,16 @@
-package view;
+package presentation;
 
-import service.CartService;
-import service.CategoryService;
-import service.ProductService;
-import service.UserService;
+import business.entity.User;
+import business.service.*;
 
 import java.util.Scanner;
 
 public class MenuUser {
-    public static void displayMainMenu(ProductService productService, CategoryService categoryService, CartService cartService) {
+    public static void displayMainMenu(OrderService orderService, User user, UserService userService, ProductService productService, CategoryService categoryService, CartService cartService) {
         Scanner scanner = new Scanner(System.in);
         int choice;
         do {
+            System.out.println("-------------------------------------------------------------------");
             System.out.println("\n===== MENU USER =====");
             System.out.println("1. Tìm kiếm sản phẩm");
             System.out.println("2. Hiển thị sản phẩm nổi bật");
@@ -20,7 +19,10 @@ public class MenuUser {
             System.out.println("5. Hiển thị sản phẩm theo giá");
             System.out.println("6. Thêm vào giỏ hàng");
             System.out.println("7. Quản lý giỏ hàng");
-            System.out.println("8. Thoát");
+            System.out.println("8. Hiển thi thông tin cá nhân");
+            System.out.println("9. Chỉnh sửa thông tin cá nhân");
+            System.out.println("10. Đổi mật khẩu");
+            System.out.println("11. Thoát");
             System.out.print("Nhập lựa chọn của bạn: ");
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
@@ -32,20 +34,29 @@ public class MenuUser {
                     productService.displayHotProducts();
                     break;
                 case 3:
-                    productService.displayProductsByCategory(categoryService);
+                    productService.displayProductsByCategory(scanner, categoryService);
                     break;
                 case 4:
-                    productService.displayProducts();
+                    productService.displayProducts(categoryService.getCategories());
                     break;
                 case 5:
                     displaySortProductMenu(scanner, productService);
                     break;
                 case 6:
-                    productService.addToCart(scanner, cartService);
+                    productService.addToCart(userService,scanner, cartService);
                     break;
                 case 7:
-                    CartMenu.displayCartMenu(scanner, cartService);
+                    CartMenu.displayCartMenu(orderService,productService,userService,scanner, cartService);
                 case 8:
+                    userService.displayUserProfile(user);
+                    break;
+                case 9:
+                    userService.editUserProfile(scanner, user);
+                    break;
+                case 10:
+                    userService.changePassword(scanner, user);
+                    break;
+                case 11:
                     return;
                 default:
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");

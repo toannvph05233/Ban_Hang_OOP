@@ -1,12 +1,13 @@
-package view;
+package presentation;
 
-import service.CategoryService;
+import business.service.CategoryService;
 
 import java.util.Scanner;
 
 public class MenuManagerCategory {
     public static void menu(Scanner scanner, CategoryService categoryService){
         while (true) {
+            System.out.println("-------------------------------------------------------------------");
             System.out.println("--- Quản lý Category ---");
             System.out.println("1. Hiển thị danh sách danh mục");
             System.out.println("2. Tạo mới danh mục");

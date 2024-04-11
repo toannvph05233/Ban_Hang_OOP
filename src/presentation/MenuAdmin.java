@@ -1,19 +1,22 @@
-package view;
+package presentation;
 
-import service.CategoryService;
-import service.ProductService;
-import service.UserService;
+import business.service.CategoryService;
+import business.service.OrderService;
+import business.service.ProductService;
+import business.service.UserService;
 
 import java.util.Scanner;
 
 public class MenuAdmin {
-    public static void menu(Scanner scanner, UserService userService, CategoryService categoryService, ProductService productService) {
+    public static void menu(OrderService orderService, Scanner scanner, UserService userService, CategoryService categoryService, ProductService productService) {
         while (true) {
+            System.out.println("-------------------------------------------------------------------");
             System.out.println("--- Menu Admin ---");
             System.out.println("1. Quản lý Account");
             System.out.println("2. Quản lý Category");
             System.out.println("3. Quản lý Product");
-            System.out.println("4. Logout");
+            System.out.println("4. Quản lý Oder");
+            System.out.println("5. Logout");
 
             System.out.print("Chọn chức năng: ");
             int choice = scanner.nextInt();
@@ -30,6 +33,9 @@ public class MenuAdmin {
                     MenuManagerProduct.menu(scanner, productService, categoryService);
                     break;
                 case 4:
+                    MenuOrder.displayOrderMenu(orderService,scanner);
+                    break; // Quay lại menu chính
+                case 5:
                     return; // Quay lại menu chính
                 default:
                     System.out.println("Lựa chọn không hợp lệ.");

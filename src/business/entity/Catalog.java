@@ -1,6 +1,10 @@
-package model;
+package business.entity;
 
-public class Catalog {
+import java.io.Serializable;
+
+public class Catalog implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String catalogId;
     private String catalogName;
     private String description;

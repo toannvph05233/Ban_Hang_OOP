@@ -1,6 +1,10 @@
-package model;
+package business.entity;
 
-public class OrderDetail {
+import java.io.Serializable;
+
+public class OrderDetail implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Long productId;
     private String name;
     private double unitPrice;

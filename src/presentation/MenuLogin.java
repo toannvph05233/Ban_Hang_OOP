@@ -1,17 +1,15 @@
-package view;
+package presentation;
 
-import model.User;
-import model.enumModel.Role;
-import service.CartService;
-import service.CategoryService;
-import service.ProductService;
-import service.UserService;
+import business.entity.User;
+import business.entity.enumModel.Role;
+import business.service.*;
 
 import java.util.Scanner;
 
 public class MenuLogin {
-    public static void userManagementMenu(Scanner scanner, UserService userService, CategoryService categoryService, ProductService productService, CartService cartService) {
+    public static void userManagementMenu(OrderService orderService, Scanner scanner, UserService userService, CategoryService categoryService, ProductService productService, CartService cartService) {
         while (true) {
+            System.out.println("-------------------------------------------------------------------");
             System.out.println("1. Đăng ký");
             System.out.println("2. Đăng nhập");
             System.out.println("3. Thoát");
@@ -27,10 +25,11 @@ public class MenuLogin {
                 case 2:
                     User user = userService.login(scanner);
                     if (user != null) {
+                        userService.setCurrentUser(user);
                         if (user.getRole() == Role.ROLE_ADMIN) {
-                            MenuAdmin.menu(scanner,userService,categoryService,productService);
+                            MenuAdmin.menu(orderService,scanner, userService, categoryService, productService);
                         } else {
-                            MenuUser.displayMainMenu(productService,categoryService,cartService);
+                            MenuUser.displayMainMenu(orderService,user, userService, productService, categoryService, cartService);
                         }
                     }
                     break;

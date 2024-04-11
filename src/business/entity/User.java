@@ -1,11 +1,13 @@
-package model;
+package business.entity;
 
-import model.enumModel.Role;
+import business.entity.enumModel.Role;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class  User {
+public class  User implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int userId;
     private String firstName;
     private String lastName;

@@ -1,11 +1,14 @@
-package model;
+package business.entity;
 
-import model.enumModel.OrderStatus;
+import business.entity.enumModel.OrderStatus;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Order {
+public class Order implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private long orderId;
     private long userId;
     private String nameReceive;

@@ -1,6 +1,8 @@
-package service;
+package business.service;
 
-import model.Catalog;
+import business.entity.Catalog;
+import utils.IOFile;
+import utils.validate.CatalogValid;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +13,11 @@ import java.util.Scanner;
 public class CategoryService {
     private static Map<String, Catalog> categories = new HashMap<>();
 
+    public CategoryService() {
+        categories = IOFile.readFromFile(IOFile.CATALOG_PATH);
+
+    }
+
     public void displayCategories() {
         System.out.println("Danh sách danh mục:");
         for (Catalog catalog : categories.values()) {
@@ -19,19 +26,14 @@ public class CategoryService {
     }
 
     public void addCategory(Scanner scanner) {
-        System.out.print("Nhập tên danh mục mới: ");
-        String name = scanner.nextLine();
+        String categoryId = CatalogValid.catalogId(scanner, categories.values());
+        String name = CatalogValid.catalogName(scanner, categories.values());;
         System.out.print("Nhập description danh mục: ");
         String description = scanner.nextLine();
-        List<Catalog> catalogs = new ArrayList<>(categories.values());
-        String categoryId;
-        if (catalogs.size() != 0) {
-            categoryId = catalogs.get(catalogs.size() - 1).getCatalogId() + 1;
-        } else {
-            categoryId = "C001";
-        }
         Catalog catalog = new Catalog(categoryId, name, description);
         categories.put(categoryId, catalog);
+        IOFile.writeToFile(IOFile.CATALOG_PATH,categories);
+
         System.out.println("Danh mục mới đã được thêm vào.");
     }
 
@@ -39,13 +41,14 @@ public class CategoryService {
         System.out.print("Nhập ID của danh mục cần chỉnh sửa: ");
         String categoryId = scanner.nextLine();
         if (categories.containsKey(categoryId)) {
-            System.out.print("Nhập tên mới của danh mục: ");
-            String newName = scanner.nextLine();
+            String name = CatalogValid.catalogName(scanner, categories.values());
             System.out.print("Nhập description danh mục: ");
             String description = scanner.nextLine();
             Catalog catalog = categories.get(categoryId);
-            catalog.setCatalogName(newName);
+            catalog.setCatalogName(name);
             catalog.setDescription(description);
+            IOFile.writeToFile(IOFile.CATALOG_PATH,categories);
+
             System.out.println("Thông tin danh mục đã được cập nhật.");
         } else {
             System.out.println("Không tìm thấy danh mục có ID là " + categoryId);
@@ -56,7 +59,8 @@ public class CategoryService {
         System.out.print("Nhập ID của danh mục cần ẩn: ");
         String categoryId = scanner.nextLine();
         if (categories.containsKey(categoryId)) {
-            categories.remove(categoryId);
+            categories.get(categoryId).setStatus(false);
+            IOFile.writeToFile(IOFile.CATALOG_PATH,categories);
             System.out.println("Danh mục đã được ẩn.");
         } else {
             System.out.println("Không tìm thấy danh mục có ID là " + categoryId);
@@ -69,11 +73,13 @@ public class CategoryService {
         int count = 0;
         for (String categoryId : categoryIds) {
             if (categories.containsKey(categoryId)) {
-                categories.remove(categoryId);
+                categories.get(categoryId).setStatus(false);
                 count++;
             }
         }
         System.out.println(count + " danh mục đã được ẩn.");
+        IOFile.writeToFile(IOFile.CATALOG_PATH,categories);
+
     }
 
     public void searchCategoryByName(Scanner scanner) {
