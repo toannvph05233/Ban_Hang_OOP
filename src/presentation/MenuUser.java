@@ -22,7 +22,8 @@ public class MenuUser {
             System.out.println("8. Hiển thi thông tin cá nhân");
             System.out.println("9. Chỉnh sửa thông tin cá nhân");
             System.out.println("10. Đổi mật khẩu");
-            System.out.println("11. Thoát");
+            System.out.println("11. Lịch sử mua hàng của ban");
+            System.out.println("12. Thoát");
             System.out.print("Nhập lựa chọn của bạn: ");
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
@@ -57,6 +58,9 @@ public class MenuUser {
                     userService.changePassword(scanner, user);
                     break;
                 case 11:
+                    orderService.displayMyOrders(userService);
+                    break;
+                case 12:
                     return;
                 default:
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");

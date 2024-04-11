@@ -39,6 +39,17 @@ public class OrderService {
             System.out.println(" ----- Tổng số tiền: " + order.getTotal());
         }
     }
+    public void displayMyOrders(UserService userService) {
+        User user = userService.getCurrentUser();
+        System.out.println("Danh sách hóa đơn của bạn :");
+        for (Order order : orders.values()) {
+            if (order.getUserId() == user.getUserId()) {
+                System.out.print("ID đơn hàng: " + order.getOrderId());
+                System.out.print(" ----- Ngày đặt hàng: " + order.getOrderAt());
+                System.out.println(" ----- Tổng số tiền: " + order.getTotal());
+            }
+        }
+    }
 
     public void confirmOrder(Scanner scanner) {
         displayOrdersByStatus(OrderStatus.UNCONFIRMED);
