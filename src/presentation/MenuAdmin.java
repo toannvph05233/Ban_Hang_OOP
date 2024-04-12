@@ -9,8 +9,11 @@ import java.util.Scanner;
 
 public class MenuAdmin {
     public static void menu(OrderService orderService, Scanner scanner, UserService userService, CategoryService categoryService, ProductService productService) {
+        // Màu cho kẻ viền và menu
+        String cyan = "\u001B[36m";
+        String reset = "\u001B[0m";
         while (true) {
-            System.out.println("-------------------------------------------------------------------");
+            System.out.println(cyan + "-------------------------------------------------------------------" + reset);
             System.out.println("--- Menu Admin ---");
             System.out.println("1. Quản lý Account");
             System.out.println("2. Quản lý Category");
@@ -18,7 +21,7 @@ public class MenuAdmin {
             System.out.println("4. Quản lý Oder");
             System.out.println("5. Logout");
 
-            System.out.print("Chọn chức năng: ");
+            System.out.print(cyan + "Chọn chức năng: " + reset);
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
 

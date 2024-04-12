@@ -7,8 +7,11 @@ import java.util.Scanner;
 
 public class MenuManagerProduct {
     public static void menu(Scanner scanner, ProductService productService, CategoryService categoryService){
+        // Màu cho kẻ viền và menu
+        String cyan = "\u001B[36m";
+        String reset = "\u001B[0m";
         while (true) {
-            System.out.println("-------------------------------------------------------------------");
+            System.out.println(cyan + "-------------------------------------------------------------------" + reset);
             System.out.println("--- Quản lý sản phẩm ---");
             System.out.println("1. Hiển thị danh sách sản phẩm");
             System.out.println("2. Thêm mới sản phẩm");
@@ -18,7 +21,7 @@ public class MenuManagerProduct {
             System.out.println("6. Tìm kiếm sản phẩm theo tên");
             System.out.println("7. Quay lại menu chính");
 
-            System.out.print("Chọn chức năng: ");
+            System.out.print(cyan + "Chọn chức năng: " + reset);
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
 

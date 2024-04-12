@@ -9,9 +9,12 @@ import java.util.Scanner;
 
 public class CartMenu {
     public static void displayCartMenu(OrderService orderService, ProductService productService, UserService userService, Scanner scanner, CartService cartService) {
+        // Màu cho kẻ viền và menu
+        String cyan = "\u001B[36m";
+        String reset = "\u001B[0m";
         int choice;
         do {
-            System.out.println("-------------------------------------------------------------------");
+            System.out.println(cyan + "-------------------------------------------------------------------" + reset);
             System.out.println("\n===== CART MENU =====");
             System.out.println("1. Hiển thị danh sách sản phẩm trong giỏ hàng");
             System.out.println("2. Thay đổi số lượng đặt hàng");

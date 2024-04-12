@@ -8,9 +8,11 @@ import java.util.Scanner;
 public class MenuUser {
     public static void displayMainMenu(OrderService orderService, User user, UserService userService, ProductService productService, CategoryService categoryService, CartService cartService) {
         Scanner scanner = new Scanner(System.in);
+        String cyan = "\u001B[36m";
+        String reset = "\u001B[0m";
         int choice;
         do {
-            System.out.println("-------------------------------------------------------------------");
+            System.out.println(cyan + "-------------------------------------------------------------------" + reset);
             System.out.println("\n===== MENU USER =====");
             System.out.println("1. Tìm kiếm sản phẩm");
             System.out.println("2. Hiển thị sản phẩm nổi bật");

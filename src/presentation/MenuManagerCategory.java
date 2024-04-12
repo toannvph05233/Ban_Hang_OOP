@@ -6,8 +6,11 @@ import java.util.Scanner;
 
 public class MenuManagerCategory {
     public static void menu(Scanner scanner, CategoryService categoryService){
+        // Màu cho kẻ viền và menu
+        String cyan = "\u001B[36m";
+        String reset = "\u001B[0m";
         while (true) {
-            System.out.println("-------------------------------------------------------------------");
+            System.out.println(cyan + "-------------------------------------------------------------------" + reset);
             System.out.println("--- Quản lý Category ---");
             System.out.println("1. Hiển thị danh sách danh mục");
             System.out.println("2. Tạo mới danh mục");
@@ -17,7 +20,7 @@ public class MenuManagerCategory {
             System.out.println("6. Tìm kiếm danh mục theo tên");
             System.out.println("7. Quay lại menu chính");
 
-            System.out.print("Chọn chức năng: ");
+            System.out.print(cyan + "Chọn chức năng: " + reset);
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
 

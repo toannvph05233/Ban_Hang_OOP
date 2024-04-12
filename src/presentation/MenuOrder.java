@@ -7,9 +7,12 @@ import java.util.Scanner;
 
 public class MenuOrder {
     public static void displayOrderMenu(OrderService orderService, Scanner scanner) {
+        // Màu cho kẻ viền và menu
+        String cyan = "\u001B[36m";
+        String reset = "\u001B[0m";
         boolean exit = false;
         while (!exit) {
-            System.out.println("-------------------------------------------------------------------");
+            System.out.println(cyan + "-------------------------------------------------------------------" + reset);
             System.out.println("---- Menu Hóa Đơn ----");
             System.out.println("1. Hiển thị danh sách hóa đơn chưa xác nhận");
             System.out.println("2. Hiển thị danh sách hóa đơn đã xác nhận");
@@ -19,7 +22,7 @@ public class MenuOrder {
             System.out.println("6. Hủy 1 đơn hàng");
             System.out.println("7. Cập nhật đơn hàng đang giao");
             System.out.println("8. Quay lại Menu chính");
-            System.out.print("Chọn chức năng (1-8): ");
+            System.out.print(cyan + "Chọn chức năng (1-8): " + reset);
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume newline character

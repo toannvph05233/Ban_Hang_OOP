@@ -6,8 +6,11 @@ import java.util.Scanner;
 
 public class MenuManagerAccount {
     public static void menu(Scanner scanner, UserService userService) {
+        // Màu cho kẻ viền và menu
+        String cyan = "\u001B[36m";
+        String reset = "\u001B[0m";
         while (true) {
-            System.out.println("-------------------------------------------------------------------");
+            System.out.println(cyan + "-------------------------------------------------------------------" + reset);
             System.out.println("--- Quản lý người dùng ---");
             System.out.println("1. Hiển thị danh sách người dùng");
             System.out.println("2. Tìm kiếm người dùng theo tên");
@@ -15,7 +18,7 @@ public class MenuManagerAccount {
             System.out.println("4. Unblock tài khoản người dùng");
             System.out.println("5. Quay lại menu chính");
 
-            System.out.print("Chọn chức năng: ");
+            System.out.print(cyan + "Chọn chức năng: " + reset);
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
 

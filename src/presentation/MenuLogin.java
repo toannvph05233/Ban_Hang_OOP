@@ -8,13 +8,16 @@ import java.util.Scanner;
 
 public class MenuLogin {
     public static void userManagementMenu(OrderService orderService, Scanner scanner, UserService userService, CategoryService categoryService, ProductService productService, CartService cartService) {
-        while (true) {
-            System.out.println("-------------------------------------------------------------------");
+        String cyan = "\u001B[36m";
+        String reset = "\u001B[0m";
+
+            while (true) {
+                System.out.println(cyan + "-------------------------------------------------------------------" + reset);
             System.out.println("1. Đăng ký");
             System.out.println("2. Đăng nhập");
             System.out.println("3. Thoát");
 
-            System.out.print("Chọn chức năng: ");
+            System.out.print(cyan + "Chọn chức năng: " + reset);
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
 
