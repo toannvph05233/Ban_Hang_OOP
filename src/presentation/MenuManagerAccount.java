@@ -37,9 +37,9 @@ public class MenuManagerAccount {
                     userService.blockUser(id);
                     break;
                 case 4:
-                    System.out.print("Nhập tên người dùng cần unblock: ");
-                    String userToUnblock = scanner.nextLine();
-                    userService.unblockUser(userToUnblock);
+                    System.out.print("Nhập id người dùng cần Unblock: ");
+                    int idUnblock = Integer.parseInt(scanner.nextLine());
+                    userService.unblockUser(idUnblock);
                     break;
                 case 5:
                     return; // Quay lại menu chính

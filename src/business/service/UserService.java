@@ -114,14 +114,13 @@ public class UserService {
         }
     }
 
-    public void unblockUser(String username) {
-        if (users.containsKey(username)) {
-            User user = users.get(username);
-            user.setStatus(true);
-            IOFile.writeToFile(IOFile.USER_PATH, users);
-            System.out.println("Tài khoản " + username + " đã được mở khóa.");
-        } else {
-            System.out.println("Không tìm thấy người dùng có tên là " + username + ".");
+    public void unblockUser(int id) {
+        for (User user : users.values()) {
+            if (user.getUserId() == id) {
+                user.setStatus(true);
+                IOFile.writeToFile(IOFile.USER_PATH, users);
+                System.out.println("Tài khoản " + user.getUsername() + " đã bị khóa.");
+            }
         }
     }
 

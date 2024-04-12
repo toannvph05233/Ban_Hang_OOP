@@ -46,7 +46,7 @@ public class MenuUser {
                     displaySortProductMenu(scanner, productService);
                     break;
                 case 6:
-                    productService.addToCart(userService,scanner, cartService);
+                    productService.addToCart(productService,userService,scanner, cartService);
                     break;
                 case 7:
                     CartMenu.displayCartMenu(orderService,productService,userService,scanner, cartService);

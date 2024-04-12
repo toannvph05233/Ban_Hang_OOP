@@ -128,7 +128,9 @@ public class  User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
+        String red = "\u001B[31m";
+        String reset = "\u001B[0m";
+        return red + "User{" +
                 "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -140,7 +142,7 @@ public class  User implements Serializable {
                 ", cart=" + cart +
                 ", role=" + role +
                 ", status=" + status +
-                '}';
+                '}' + reset;
     }
 }
 

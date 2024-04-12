@@ -54,11 +54,13 @@ public class Catalog implements Serializable {
 
     @Override
     public String toString() {
-        return "Catalog{" +
+        String red = "\u001B[31m";
+        String reset = "\u001B[0m";
+        return red + "Catalog{" +
                 "catalogId='" + catalogId + '\'' +
                 ", catalogName='" + catalogName + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
-                '}';
+                '}' + reset;
     }
 }

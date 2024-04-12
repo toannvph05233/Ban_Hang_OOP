@@ -105,7 +105,9 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" +
+        String red = "\u001B[31m";
+        String reset = "\u001B[0m";
+        return red + "Product{" +
                 "productId=" + productId +
                 ", productName='" + productName + '\'' +
                 ", categoryId='" + categoryId + '\'' +
@@ -115,7 +117,7 @@ public class Product implements Serializable {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", status=" + status +
-                '}';
+                '}' + reset;
     }
 
     public boolean isHotProduct() {
