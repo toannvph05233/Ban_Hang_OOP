@@ -56,28 +56,28 @@ public class CategoryService {
     }
 
     public void hideCategoryById(Scanner scanner) {
-        System.out.print("Nhập ID của danh mục cần ẩn: ");
+        System.out.print("Nhập ID của danh mục cần ẩn/hiện: ");
         String categoryId = scanner.nextLine();
         if (categories.containsKey(categoryId)) {
-            categories.get(categoryId).setStatus(false);
+            categories.get(categoryId).setStatus(!categories.get(categoryId).isStatus());
             IOFile.writeToFile(IOFile.CATALOG_PATH,categories);
-            System.out.println("Danh mục đã được ẩn.");
+            System.out.println("Danh mục đã được ẩn/hiện.");
         } else {
             System.out.println("Không tìm thấy danh mục có ID là " + categoryId);
         }
     }
 
     public void hideCategoriesByIds(Scanner scanner) {
-        System.out.print("Nhập danh sách ID của các danh mục cần ẩn (cách nhau bằng dấu phẩy): ");
+        System.out.print("Nhập danh sách ID của các danh mục cần ẩn/hiện (cách nhau bằng dấu phẩy): ");
         String[] categoryIds = scanner.nextLine().split(",");
         int count = 0;
         for (String categoryId : categoryIds) {
             if (categories.containsKey(categoryId)) {
-                categories.get(categoryId).setStatus(false);
+                categories.get(categoryId).setStatus(!categories.get(categoryId).isStatus());
                 count++;
             }
         }
-        System.out.println(count + " danh mục đã được ẩn.");
+        System.out.println(count + " danh mục đã được ẩn/hiện.");
         IOFile.writeToFile(IOFile.CATALOG_PATH,categories);
 
     }

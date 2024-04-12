@@ -119,7 +119,7 @@ public class UserService {
             if (user.getUserId() == id) {
                 user.setStatus(true);
                 IOFile.writeToFile(IOFile.USER_PATH, users);
-                System.out.println("Tài khoản " + user.getUsername() + " đã bị khóa.");
+                System.out.println("Tài khoản " + user.getUsername() + " đã mo khóa.");
             }
         }
     }
