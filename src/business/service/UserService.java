@@ -1,5 +1,6 @@
 package business.service;
 
+import business.entity.Product;
 import business.entity.User;
 
 import business.entity.enumModel.Role;
@@ -31,7 +32,7 @@ public class UserService {
 
     public UserService() {
         users = IOFile.readFromFile(IOFile.USER_PATH);
-        if (users.isEmpty()){
+        if (users.isEmpty()) {
             User user = new User(1, "admin", "1", "1", BCrypt.hashpw("admin", BCrypt.gensalt()), "1", "1", "1");
             user.setRole(Role.ROLE_ADMIN);
             users.put("admin", user);
@@ -40,8 +41,8 @@ public class UserService {
     }
 
     public void register(Scanner scanner) {
-        String username = UserValid.username(scanner,users);
-        String email = UserValid.email(scanner, (Collection<User>) users.values());
+        String username = UserValid.username(scanner, users);
+        String email = UserValid.email(scanner,  users.values());
         String phoneNumber = UserValid.phone(scanner);
         String password = UserValid.password(scanner);
         String firstName = UserValid.firstName(scanner);
@@ -53,12 +54,12 @@ public class UserService {
         List<User> users1 = new ArrayList<>(users.values());
         int id;
         if (users1.size() != 0) {
-            id = users1.get(users1.size() - 1).getUserId() + 1;
+            id = getMaxId() + 1;
         } else {
             id = 1;
         }
         // Tạo đối tượng User với thông tin đã nhập
-        User newUser = new User(id, username, firstName, lastName, hashedPassword, email, phoneNumber, address);
+        User newUser = new User(id, firstName, lastName, username, hashedPassword, email, phoneNumber, address);
 
         users.put(username, newUser);
         IOFile.writeToFile(IOFile.USER_PATH, users);
@@ -78,6 +79,16 @@ public class UserService {
             }
         }
         return null;
+    }
+
+    public int getMaxId() {
+        int idMax = 0;
+        for (User p : users.values()) {
+            if (idMax < p.getUserId()) {
+                idMax = p.getUserId();
+            }
+        }
+        return idMax;
     }
 
     public void displayUsers() {
