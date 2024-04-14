@@ -34,6 +34,8 @@ public class MenuLogin {
                         } else {
                             MenuUser.displayMainMenu(orderService,user, userService, productService, categoryService, cartService);
                         }
+                    }else {
+                        System.out.println("Sai Username or Password");
                     }
                     break;
                 case 3:
