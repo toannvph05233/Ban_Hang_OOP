@@ -64,7 +64,7 @@ public class CartService {
             System.out.println("Lựa chọn không hợp lệ.");
             return;
         }
-        CartItem cartItem = cartItems.get(choice);
+        CartItem cartItem = cartItems.get(choice-1);
         Product product = productService.findById(Math.toIntExact(cartItem.getProductId()));
         int quantity;
         while (true) {
@@ -106,7 +106,7 @@ public class CartService {
             System.out.println("Lựa chọn không hợp lệ.");
             return;
         }
-        cartItems.remove(choice);
+        cartItems.remove(choice-1);
         IOFile.writeToFile(IOFile.USER_PATH, UserService.getUsers());
         System.out.println("Sản phẩm đã được xóa khỏi giỏ hàng.");
     }
